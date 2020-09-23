@@ -56,7 +56,6 @@ public class EnhancedCacheInterceptor implements Interceptor {
             sb.append(buffer.readString(charset));
             buffer.close();
         }
-        Log.d(CacheManager.TAG, "EnhancedCacheInterceptor -> key:" + sb.toString());
         ResponseBody responseBody = response.body();
         MediaType contentType = responseBody.contentType();
         BufferedSource source = responseBody.source();
@@ -68,8 +67,7 @@ public class EnhancedCacheInterceptor implements Interceptor {
         }
         String key = sb.toString();
         String json = buffer.clone().readString(charset);
-        Log.d(CacheManager.TAG, "EnhancedCacheInterceptor -> key:" +json);
-        CacheManager.getInstance().putCache(key, json);
+        //Log.d(CacheManager.TAG, "EnhancedCacheInterceptor -> key:" +json);
         return chain.proceed(request);
     }
 }
