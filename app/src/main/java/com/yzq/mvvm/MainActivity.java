@@ -1,6 +1,10 @@
 package com.yzq.mvvm;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -8,6 +12,7 @@ import com.yzq.core.base.BaseActivity;
 import com.yzq.mvvm.adapter.PhotoLoadMoreAdapter;
 import com.yzq.mvvm.bean.GankIoDataBean;
 import com.yzq.mvvm.databinding.ActivityMainBinding;
+import com.yzq.mvvm.test.Cat;
 import com.yzq.mvvm.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -55,9 +60,13 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     showError();
                 }
                 PAGE++;
-
-
-
+            }
+        });
+        final Cat mCat=new Cat();
+        bindingView.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,mCat.say(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -66,11 +75,5 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     protected void start() {
         super.start();
         viewModel.getData(PAGE);
-    }
-
-    @Override
-    protected void onRefresh() {
-        super.onRefresh();
-
     }
 }

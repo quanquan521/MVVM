@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -12,6 +13,7 @@ import com.yzq.core.R;
 import com.yzq.core.RxManager;
 import com.yzq.core.databinding.ActivityBaseBinding;
 import com.yzq.core.utils.ClassUtil;
+import com.yzq.core.widget.LoadingLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -36,10 +38,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
     // 布局view
     protected SV bindingView;
     private ActivityBaseBinding mBaseBinding;
-    private View loadingView;
-    private View errorView;
-    private AnimationDrawable mAnimationDrawable;
-
+    private LoadingLayout loadingLayout;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -49,16 +48,11 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         bindingView.getRoot().setLayoutParams(params);
         RelativeLayout mContainer = (RelativeLayout) mBaseBinding.getRoot().findViewById(R.id.container);
         mContainer.addView(bindingView.getRoot());
+        loadingLayout= (LoadingLayout) LayoutInflater.from(this).inflate(R.layout.loading_layout,null);
+        loadingLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mContainer.addView(loadingLayout);
         getWindow().setContentView(mBaseBinding.getRoot());
-
-        loadingView = ((ViewStub) findViewById(R.id.vs_loading)).inflate();
-        ImageView img = loadingView.findViewById(R.id.img_progress);
-        // 加载动画
-        mAnimationDrawable = (AnimationDrawable) img.getDrawable();
-        // 默认进入页面就开启动画
-        if (!mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.start();
-        }
+        showLoading();
         bindingView.getRoot().setVisibility(View.GONE);
         initStatusBar();
         initViewModel();
@@ -76,57 +70,26 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         }
     }
     protected void showContentView() {
-        if (loadingView != null && loadingView.getVisibility() != View.GONE) {
-            loadingView.setVisibility(View.GONE);
-        }
-        // 停止动画
-        if (mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.stop();
-        }
-        if (errorView != null) {
-            errorView.setVisibility(View.GONE);
-        }
+        loadingLayout.showContentView();
         if (bindingView.getRoot().getVisibility() != View.VISIBLE) {
             bindingView.getRoot().setVisibility(View.VISIBLE);
         }
     }
     protected void showLoading() {
-        if (loadingView != null && loadingView.getVisibility() != View.VISIBLE) {
-            loadingView.setVisibility(View.VISIBLE);
-        }
-        // 开始动画
-        if (!mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.start();
-        }
-        if (bindingView.getRoot().getVisibility() != View.GONE) {
+        loadingLayout.showLoading();
+        /*if (bindingView.getRoot().getVisibility() != View.GONE) {
             bindingView.getRoot().setVisibility(View.GONE);
-        }
-        if (errorView != null) {
-            errorView.setVisibility(View.GONE);
-        }
+        }*/
     }
     protected void showError() {
-        if (loadingView != null && loadingView.getVisibility() != View.GONE) {
-            loadingView.setVisibility(View.GONE);
-        }
-        // 停止动画
-        if (mAnimationDrawable.isRunning()) {
-            mAnimationDrawable.stop();
-        }
-        if (errorView == null) {
-            ViewStub viewStub = (ViewStub) findViewById(R.id.vs_error_refresh);
-            errorView = viewStub.inflate();
-            // 点击加载失败布局
-            errorView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showLoading();
-                    onRefresh();
-                }
-            });
-        } else {
-            errorView.setVisibility(View.VISIBLE);
-        }
+        loadingLayout.showError();
+        loadingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLoading();
+                tryToLoad();
+            }
+        });
         if (bindingView.getRoot().getVisibility() != View.GONE) {
             bindingView.getRoot().setVisibility(View.GONE);
         }
@@ -135,7 +98,8 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
     /**
      * 失败后点击刷新
      */
-    protected void onRefresh() {
+    protected void tryToLoad() {
+
 
     }
     /*
