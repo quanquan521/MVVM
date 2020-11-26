@@ -12,9 +12,7 @@ import com.yzq.core.base.BaseActivity;
 import com.yzq.mvvm.adapter.PhotoLoadMoreAdapter;
 import com.yzq.mvvm.bean.GankIoDataBean;
 import com.yzq.mvvm.databinding.ActivityMainBinding;
-import com.yzq.mvvm.test.Cat;
 import com.yzq.mvvm.viewmodel.MainViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +30,7 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initBackTitle("美女图片");
         adapter=new PhotoLoadMoreAdapter(R.layout.item_girl,list);
         adapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -56,17 +55,11 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                     }else {
                         adapter.getLoadMoreModule().loadMoreComplete();
                     }
+                    PAGE++;
                 }else {
                     showError();
                 }
-                PAGE++;
-            }
-        });
-        final Cat mCat=new Cat();
-        bindingView.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,mCat.say(),Toast.LENGTH_SHORT).show();
+
             }
         });
     }

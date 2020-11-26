@@ -5,15 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yzq.core.R;
 import com.yzq.core.RxManager;
 import com.yzq.core.databinding.ActivityBaseBinding;
 import com.yzq.core.utils.ClassUtil;
 import com.yzq.core.widget.LoadingLayout;
+import com.yzq.core.widget.TitleBuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -59,8 +62,18 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         start();
     }
     protected void initStatusBar() {
+        ImmersionBar.with(this).statusBarColor(R.color.colorWhite) .statusBarDarkFont(true, 0.2f) .navigationBarColor(R.color.colorWhite).fitsSystemWindows(true).init();;
+    }
 
-
+    protected TitleBuilder initBackTitle(String title) {
+        return new TitleBuilder(this)
+                .setTitleText(title)
+                .setLeftOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BaseActivity.this.finish();
+                    }
+                });
     }
     private void initViewModel() {
         Class<VM> viewModelClass = ClassUtil.getViewModel(this);

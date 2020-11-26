@@ -36,7 +36,7 @@ import dalvik.system.DexClassLoader;
         String dexPath= Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
         File file=new File(dexPath);
         if (file.exists()){
-            inject(dexPath);
+           // inject(dexPath);
         }
     }
 

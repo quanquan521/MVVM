@@ -19,6 +19,7 @@ import androidx.databinding.BindingAdapter;
  * 描述：
  */
 public class GlideUtil {
+
     @BindingAdapter("android:showImg")
     public static void showImg(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
