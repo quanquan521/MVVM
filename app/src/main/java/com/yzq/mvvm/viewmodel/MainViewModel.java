@@ -35,7 +35,7 @@ public class MainViewModel extends BaseViewModel {
         super(application);
     }
    public LiveData<GankIoDataBean> getData(int page){
-        mRxManager.add(RxService.createApi(Api.class).getGankIoData("Girl", "Girl",page, 10).compose(RxUtil.<GankIoDataBean>rxSchedulerHelper()).subscribe(new Consumer<GankIoDataBean>() {
+        mRxManager.add(RxService.createApi(Api.class).getGankIoData("Girl", "Girl",page, 20).compose(RxUtil.<GankIoDataBean>rxSchedulerHelper()).subscribe(new Consumer<GankIoDataBean>() {
             @Override
             public void accept(GankIoDataBean gankIoDataBean) throws Exception {
                 gankIoDataBeanMutableLiveData.postValue(gankIoDataBean);

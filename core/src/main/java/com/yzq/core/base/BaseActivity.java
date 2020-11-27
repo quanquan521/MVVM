@@ -111,10 +111,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
     /**
      * 失败后点击刷新
      */
-    protected void tryToLoad() {
-
-
-    }
+    protected void tryToLoad() {}
     /*
     * 加载数据
     *
