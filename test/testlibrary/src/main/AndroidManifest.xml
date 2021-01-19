@@ -3,7 +3,8 @@
     package="com.yzq.testlibrary">
 
     <application>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ProxyActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

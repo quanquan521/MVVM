@@ -31,7 +31,7 @@ public class CoreRecyclerView extends LinearLayout implements OnRefreshListener,
         void addData(int page);
     }
     private int page=1;
-    private  int pageSize=20;  //可以根据总页数判断分页
+    private  int pageSize=20;
     public CoreRecyclerView(Context context) {
         super(context);
         initView(context);

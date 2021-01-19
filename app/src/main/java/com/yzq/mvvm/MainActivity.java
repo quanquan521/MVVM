@@ -1,6 +1,7 @@
 package com.yzq.mvvm;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.yzq.core.base.BaseActivity;
 import com.yzq.core.utils.LogUtil;
 import com.yzq.core.widget.CoreRecyclerView;
+import com.yzq.core.widget.TitleBuilder;
 import com.yzq.mvvm.adapter.PhotoLoadMoreAdapter;
 import com.yzq.mvvm.bean.GankIoDataBean;
 import com.yzq.mvvm.databinding.ActivityMainBinding;
@@ -30,7 +32,13 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initBackTitle("美女图片");
+        TitleBuilder builder= initBackTitle("美女图片");
+        builder.setLeftOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, com.yzq.testlibrary.MainActivity.class));
+            }
+        });
     }
 
     @Override

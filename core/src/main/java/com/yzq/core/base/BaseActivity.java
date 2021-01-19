@@ -61,17 +61,18 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         initViewModel();
         start();
     }
-    protected void initStatusBar() {
+    public void initStatusBar() {
         ImmersionBar.with(this).statusBarColor(R.color.colorWhite) .statusBarDarkFont(true, 0.2f) .navigationBarColor(R.color.colorWhite).fitsSystemWindows(true).init();;
     }
 
     protected TitleBuilder initBackTitle(String title) {
         return new TitleBuilder(this)
                 .setTitleText(title)
+                .setLeftImage(R.mipmap.ic_launcher)
                 .setLeftOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        BaseActivity.this.finish();
+                        finish();
                     }
                 });
     }
@@ -79,7 +80,6 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         Class<VM> viewModelClass = ClassUtil.getViewModel(this);
         if (viewModelClass != null) {
             this.viewModel = new ViewModelProvider(this).get(viewModelClass);
-
         }
     }
     protected void showContentView() {

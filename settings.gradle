@@ -1,3 +1,4 @@
+include 'test:plugin'
 include ':test:testlibrary'
 include ':core'
 include ':app'
