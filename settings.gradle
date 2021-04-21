@@ -1,5 +1,5 @@
 include 'test:plugin'
 include ':test:testlibrary'
-include ':core'
+include ':core_mvvm'
 include ':app'
 rootProject.name = "MVVM"

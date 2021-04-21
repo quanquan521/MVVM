@@ -17,7 +17,6 @@ public class MyService extends Service {
         return  mBinder;
     }
 
-
     private final IMyAidlInterface.Stub mBinder = new IMyAidlInterface.Stub() {
         @Override
         public int test(int x, int y) {
