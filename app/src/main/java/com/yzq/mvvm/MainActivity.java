@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.yzq.core.base.BaseActivity;
 import com.yzq.core.data.callback.StateData;
 import com.yzq.core.data.callback.Status;

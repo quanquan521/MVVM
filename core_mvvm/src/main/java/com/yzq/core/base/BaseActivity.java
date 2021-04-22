@@ -9,11 +9,13 @@ import android.widget.RelativeLayout;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.toast.ToastUtils;
+
 import com.yzq.core.R;
 import com.yzq.core.databinding.ActivityBaseBinding;
 import com.yzq.core.utils.ClassUtil;
 import com.yzq.core.widget.LoadingLayout;
 import com.yzq.core.widget.TitleBuilder;
+
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
