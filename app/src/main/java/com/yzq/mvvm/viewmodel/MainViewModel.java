@@ -3,6 +3,8 @@ package com.yzq.mvvm.viewmodel;
 import android.app.Application;
 
 import com.yzq.core.base.BaseViewModel;
+import com.yzq.core.data.callback.StateData;
+import com.yzq.core.data.callback.StateLiveData;
 import com.yzq.core.data.net.RxService;
 import com.yzq.core.utils.RxUtil;
 import com.yzq.mvvm.Api;
@@ -25,20 +27,20 @@ import io.reactivex.functions.Consumer;
  * 描述：
  */
 public class MainViewModel extends BaseViewModel {
-   private MutableLiveData<GankIoDataBean> gankIoDataBeanMutableLiveData = new MutableLiveData<>();
+   private StateLiveData<GankIoDataBean> gankIoDataBeanMutableLiveData = new StateLiveData<GankIoDataBean> ();
 
-    public MutableLiveData<GankIoDataBean> getGankIoDataBeanMutableLiveData() {
+    public StateLiveData<GankIoDataBean> getGankIoDataBeanMutableLiveData() {
         return gankIoDataBeanMutableLiveData;
     }
 
     public MainViewModel(@NonNull Application application) {
         super(application);
     }
-   public LiveData<GankIoDataBean> getData(int page){
-        mRxManager.add(RxService.createApi(Api.class).getGankIoData("Girl", "Girl",page, 20).compose(RxUtil.<GankIoDataBean>rxSchedulerHelper()).subscribe(new Consumer<GankIoDataBean>() {
+   public StateLiveData<GankIoDataBean> getData(int page){
+        mRxManager.add(RxService.createApi(Api.class).getGankIoData("Girl", "Girl",page, 50).compose(RxUtil.<GankIoDataBean>rxSchedulerHelper()).subscribe(new Consumer<GankIoDataBean>() {
             @Override
             public void accept(GankIoDataBean gankIoDataBean) throws Exception {
-                gankIoDataBeanMutableLiveData.postValue(gankIoDataBean);
+               gankIoDataBeanMutableLiveData.postSuccess(gankIoDataBean);
             }
         }, new Consumer<Throwable>() {
             @Override

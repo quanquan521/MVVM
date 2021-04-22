@@ -1,10 +1,16 @@
 package com.yzq.mvvm.adapter;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jakewharton.rxbinding.view.RxView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
+
+import com.yzq.mvvm.R;
 import com.yzq.mvvm.bean.GankIoDataBean;
 import com.yzq.mvvm.databinding.ItemGirlBinding;
 
@@ -28,7 +36,7 @@ import rx.functions.Action1;
  * <p>
  * 描述：
  */
-public  class PhotoLoadMoreAdapter extends BaseQuickAdapter<GankIoDataBean.ResultBean, BaseDataBindingHolder> implements LoadMoreModule {
+public  class PhotoLoadMoreAdapter extends BaseQuickAdapter<GankIoDataBean.ResultBean, BaseViewHolder>{
 
 
     public PhotoLoadMoreAdapter(int layoutResId, @Nullable List<GankIoDataBean.ResultBean> data) {
@@ -36,16 +44,14 @@ public  class PhotoLoadMoreAdapter extends BaseQuickAdapter<GankIoDataBean.Resul
     }
 
     @Override
-    protected void convert(@NotNull BaseDataBindingHolder baseViewHolder, GankIoDataBean.ResultBean o) {
-        final ItemGirlBinding mBindHeader = DataBindingUtil.getBinding(baseViewHolder.itemView);
-        mBindHeader.setItem(o);
-        mBindHeader.executePendingBindings();
-        RxView.clicks(mBindHeader.ivWelfare).subscribe(new Action1<Object>() {
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, GankIoDataBean.ResultBean o) {
+        ImageView iv_welfare=baseViewHolder.getView(R.id.iv_welfare);
+        Glide.with(getContext()).load(o.getUrl()).into(iv_welfare);
+        RxView.clicks(iv_welfare).subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
                 Toast.makeText(getContext(),"aaaaaaaa",Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

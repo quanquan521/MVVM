@@ -27,24 +27,6 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ServiceConnection mServiceConn = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            IMyAidlInterface a=IMyAidlInterface.Stub.asInterface(service);
-            try {
-                Toast.makeText(MainActivity.this, a.test(2,2)+"", Toast.LENGTH_SHORT).show();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +35,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.mBtnLoadPlugin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // loadPlugin();
-                Intent intent = new Intent();
-                intent.setAction("com.yzq.plugin.action");
-                intent.setPackage("com.yzq.plugin");
-                bindService(intent, mServiceConn, Context.BIND_AUTO_CREATE);
-
+                loadPlugin();
             }
         });
         findViewById(R.id.mBtnStartProxy).setOnClickListener(new View.OnClickListener() {

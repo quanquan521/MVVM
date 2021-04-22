@@ -31,7 +31,7 @@ public class CoreRecyclerView extends LinearLayout implements OnRefreshListener,
         void addData(int page);
     }
     private int page=1;
-    private  int pageSize=20;
+    private  int pageSize=10;
     public CoreRecyclerView(Context context) {
         super(context);
         initView(context);
